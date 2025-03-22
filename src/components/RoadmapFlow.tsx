@@ -1,11 +1,7 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import ReactFlow, {
-  Background,
   Controls,
   Node,
-  Edge,
-  useNodesState,
-  useEdgesState,
   useReactFlow,
   ReactFlowProvider
 } from 'reactflow';
@@ -120,17 +116,9 @@ const RoadmapFlowInner: React.FC<RoadmapFlowProps> = ({
               {tasksCompleted}/{totalTasks} tasks completed
             </div>
             {progress > 0 && (
-              <div className={`mt-3 h-1.5 ${
-                currentSection === section.id 
-                  ? 'bg-white/40 dark:bg-slate-900/40' 
-                  : 'bg-gray-200/30 dark:bg-gray-700/30'
-              } rounded-full overflow-hidden`}>
+              <div className="mt-3 h-1.5 bg-gray-200/30 dark:bg-gray-700/30 rounded-full overflow-hidden">
                 <div
-                  className={`h-full ${
-                    currentSection === section.id
-                      ? 'bg-white dark:bg-white' 
-                      : 'bg-blue-500/70 dark:bg-blue-400/70'
-                  } rounded-full transition-all duration-500`}
+                  className="h-full bg-blue-500/70 dark:bg-blue-400/70 rounded-full transition-all duration-500"
                   style={{ width: `${progress}%` }}
                 />
               </div>
@@ -157,7 +145,7 @@ const RoadmapFlowInner: React.FC<RoadmapFlowProps> = ({
   };
 
   // Handler for node click with animation and centering
-  const handleNodeClick = useCallback((event: React.MouseEvent, node: Node) => {
+  const handleNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
     // Get the node's position
     const nodePosition = nodePositions[node.id];
     
@@ -185,7 +173,7 @@ const RoadmapFlowInner: React.FC<RoadmapFlowProps> = ({
   }, [nodePositions, onSectionClick, reactFlowInstance]);
 
   // Add scroll position tracking
-  const [showScrollPrompt, setShowScrollPrompt] = React.useState(true);
+  const [showDragPrompt, setShowDragPrompt] = React.useState(true);
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -201,14 +189,14 @@ const RoadmapFlowInner: React.FC<RoadmapFlowProps> = ({
       const match = viewportTransform.match(/translate\(([-\d.]+)px,\s*([-\d.]+)px\)/);
       if (!match) return;
 
-      const [, translateX, translateY] = match;
+      const [, , translateY] = match;
       const scale = parseFloat(viewportTransform.match(/scale\(([-\d.]+)\)/)?.[1] || '1');
       
       const lastNodeViewportY = lastNode.position.y * scale + parseFloat(translateY);
       const containerHeight = container.parentElement?.clientHeight || 0;
 
       // Hide prompt when last node is in view
-      setShowScrollPrompt(lastNodeViewportY > containerHeight);
+      setShowDragPrompt(lastNodeViewportY > containerHeight);
     };
 
     const container = document.querySelector('.react-flow') as HTMLElement;
@@ -262,7 +250,7 @@ const RoadmapFlowInner: React.FC<RoadmapFlowProps> = ({
   }, [reactFlowInstance]);
 
   return (
-    <div className="roadmap-flow-container h-[calc(100vh-200px)] min-h-[500px] w-full relative overflow-hidden border-b border-slate-200 dark:border-slate-800">
+    <div className="roadmap-flow-container h-[calc(100vh-300px)] min-h-[500px] w-full relative overflow-hidden border-b border-slate-200 dark:border-slate-800">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -282,10 +270,12 @@ const RoadmapFlowInner: React.FC<RoadmapFlowProps> = ({
           className={`m-2 ${theme === 'dark' ? 'bg-slate-800/60' : 'bg-white/80'} backdrop-blur-sm border-0 shadow-md rounded-lg`}
           showInteractive={false}
         />
-      </ReactFlow>
-      {showScrollPrompt && (
-        <div className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 ${theme === 'dark' ? 'bg-slate-800/80' : 'bg-white/90'} backdrop-blur-sm px-3 py-1.5 rounded-full text-xs animate-pulse shadow-md`}>
-          <span className="opacity-75">Drag down to see more</span>
+      </ReactFlow>      
+      {showDragPrompt && (
+      <div className={`absolute bottom-12 left-1/2 transform -translate-x-1/2 ${theme === 'dark' ? 'bg-slate-800/80' : 'bg-slate-700/90'} text-white backdrop-blur-sm px-3 py-1.5 rounded-full text-xs animate-pulse shadow-md`}>
+        <span className="flex items-center gap-1">
+          Drag to pan the diagram
+        </span>
         </div>
       )}
     </div>
@@ -299,4 +289,4 @@ export const RoadmapFlow: React.FC<RoadmapFlowProps> = (props) => {
       <RoadmapFlowInner {...props} />
     </ReactFlowProvider>
   );
-}; 
+};
