@@ -1,27 +1,33 @@
-# Full-Stack Developer Roadmap Visualization
+# Full-Stack Developer Roadmap 2025
 
-An interactive visualization of the journey to becoming a full-stack developer in 2025, built with TypeScript, Tailwind CSS, Parcel, and Mermaid.js.
+An interactive visualization of the journey to becoming a full-stack developer in 2025, built with React, TypeScript, Tailwind CSS, and React Flow.
 
 ## Features
 
 - Interactive flowchart diagram showing the full-stack development path
+- Animated node-centering when clicking on roadmap sections
+- Progress tracking with localStorage persistence
 - Detailed information for each step in the roadmap
 - Resource links for learning each technology or concept
-- Modern, responsive UI for desktop and mobile viewing
+- Task completion tracking with visual progress indicators
+- Dark/light mode theme toggle
+- Responsive UI for desktop and mobile viewing
 
 ## Technologies Used
 
+- React
 - TypeScript
 - Tailwind CSS
-- Parcel (for bundling)
-- Mermaid.js (for flowchart generation)
+- Vite (for bundling)
+- React Flow (for interactive flowchart)
+- LocalStorage API (for data persistence)
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js (v14 or higher)
-- Yarn (v1.22 or higher)
+- Yarn (v1.22 or higher) or npm
 
 ### Installation
 
@@ -30,12 +36,16 @@ An interactive visualization of the journey to becoming a full-stack developer i
 
 ```bash
 yarn install
+# or
+npm install
 ```
 
 3. Start the development server:
 
 ```bash
-yarn start
+yarn dev
+# or
+npm run dev
 ```
 
 4. Open your browser and navigate to `http://localhost:1234`
@@ -46,6 +56,8 @@ To build the application for production, run:
 
 ```bash
 yarn build
+# or
+npm run build
 ```
 
 The built files will be in the `dist` directory.
@@ -54,15 +66,24 @@ The built files will be in the `dist` directory.
 
 ```
 ├── src/
-│   ├── index.html       # Main HTML file
-│   ├── index.ts         # Main TypeScript file
-│   ├── roadmap-data.ts  # Data for the roadmap
-│   ├── styles.css       # Tailwind CSS styles
-│   └── types.ts         # TypeScript type definitions
+│   ├── index.tsx        # Main entry point
+│   ├── App.tsx          # Main application component
+│   ├── roadmap-data.ts  # Data for the roadmap sections and tasks
+│   ├── types.ts         # TypeScript type definitions
+│   ├── styles.css       # Global styles and Tailwind imports
+│   ├── components/      # UI components
+│   │   ├── Header.tsx
+│   │   ├── ProgressBar.tsx
+│   │   ├── RoadmapFlow.tsx
+│   │   ├── SectionDetails.tsx
+│   │   └── ThemeToggle.tsx
+│   └── contexts/
+│       └── ThemeContext.tsx
 ├── package.json
 ├── tailwind.config.js
 ├── postcss.config.js
 ├── tsconfig.json
+├── vite.config.js
 └── README.md
 ```
 

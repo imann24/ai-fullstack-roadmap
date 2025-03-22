@@ -116,9 +116,17 @@ const RoadmapFlowInner: React.FC<RoadmapFlowProps> = ({
               {tasksCompleted}/{totalTasks} tasks completed
             </div>
             {progress > 0 && (
-              <div className="mt-3 h-1.5 bg-gray-200/30 dark:bg-gray-700/30 rounded-full overflow-hidden">
+              <div className={`mt-3 h-1.5 ${
+                currentSection === section.id 
+                  ? 'bg-white/40 dark:bg-slate-900/40' 
+                  : 'bg-gray-200/30 dark:bg-gray-700/30'
+              } rounded-full overflow-hidden`}>
                 <div
-                  className="h-full bg-blue-500/70 dark:bg-blue-400/70 rounded-full transition-all duration-500"
+                  className={`h-full ${
+                    currentSection === section.id
+                      ? 'bg-white/90 dark:bg-slate-100/90' 
+                      : 'bg-blue-500/70 dark:bg-blue-400/70'
+                  } rounded-full transition-all duration-500`}
                   style={{ width: `${progress}%` }}
                 />
               </div>
